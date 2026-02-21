@@ -1,9 +1,14 @@
 import { AssetIcon } from "@/components/asset-icon";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
+import { useStyles } from "@/theme";
+
+import { createStyles } from "./ChatHeader.styles";
+
 export function ChatHeader() {
+  const styles = useStyles(createStyles);
   const insets = useSafeAreaInsets();
 
   return (
@@ -28,43 +33,4 @@ export function ChatHeader() {
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingHorizontal: 24,
-    paddingBottom: 12,
-    backgroundColor: "#FFFFFF",
-  },
-  cameraButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 999,
-    backgroundColor: "#F9FAFB",
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 10,
-  },
-  centerPill: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#E5E7EB",
-    backgroundColor: "#FFFFFF",
-    height: 32,
-  },
-  centerLabel: {
-    fontFamily: "Inter-Medium",
-    fontSize: 12,
-    fontWeight: "500",
-    lineHeight: 16,
-    color: "#374151",
-  },
-});
+

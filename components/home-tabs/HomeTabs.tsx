@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -8,6 +8,9 @@ import Animated, {
 
 import { AssetIcon } from "@/components/asset-icon";
 import { GradientText } from "@/components/gradient-text";
+import { useStyles } from "@/theme";
+
+import { createStyles } from "./styles";
 
 type Tab = "ia" | "tutores";
 
@@ -32,6 +35,7 @@ const GRADIENT_COLORS: [string, string, ...string[]] = [
 const INACTIVE_COLORS: [string, string] = ["#374151", "#374151"];
 
 export function HomeTabs({ onChange }: HomeTabsProps) {
+  const styles = useStyles(createStyles);
   const [active, setActive] = useState<Tab>("ia");
   const tabWidth = useSharedValue(0);
   const translateX = useSharedValue(0);
@@ -105,46 +109,4 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
   );
 }
 
-const styles = StyleSheet.create({
-  wrapper: {
-    flexDirection: "row",
-    borderRadius: 8,
-    backgroundColor: "#FFFFFF",
-    borderWidth: 1,
-    borderColor: "#E5E7EB",
-    position: "relative",
-  },
-  indicator: {
-    position: "absolute",
-    top: -1,
-    left: -1,
-    bottom: -1,
-    borderRadius: 8,
-    backgroundColor: "#F6EDFB",
-    borderWidth: 1,
-    borderColor: "#A14BD7",
-  },
-  tab: {
-    flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    paddingVertical: 12,
-    borderRadius: 10,
-    zIndex: 1,
-  },
-  label: {
-    fontFamily: "Inter-Medium",
-    fontSize: 14,
-    fontWeight: "500",
-    lineHeight: 20,
-    color: "#374151",
-  },
-  labelActive: {
-    fontFamily: "Inter-SemiBold",
-    fontSize: 14,
-    fontWeight: "600",
-    lineHeight: 20,
-  },
-});
+
