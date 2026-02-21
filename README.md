@@ -420,8 +420,6 @@ yarn ios
 # Android (requer Android Studio)
 yarn android
 
-# Web
-yarn web
 ```
 
 > Requer Expo Go ou build de desenvolvimento com `expo-dev-client`.
