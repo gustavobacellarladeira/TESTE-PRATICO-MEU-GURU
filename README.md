@@ -20,7 +20,7 @@
 
 |   Plataforma   | Como testar                                                                                                                                    |
 | :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🤖 **Android** | APK disponível na pasta [`/android`](./android) deste repositório. Baixe o arquivo `.apk`, transfira para o dispositivo e instale diretamente. |
+| 🤖 **Android** | [⬇️ Baixar APK](./github/android/application-f2188d55-5d23-477c-a72e-5954d3b6a49e.apk) — transfira para o dispositivo e instale diretamente. |
 |   🍎 **iOS**   | Build disponível via **TestFlight**. Entre em contato para receber o convite de acesso.                                                        |
 
 ---
