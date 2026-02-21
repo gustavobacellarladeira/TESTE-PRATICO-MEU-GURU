@@ -108,5 +108,3 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
     </View>
   );
 }
-
-

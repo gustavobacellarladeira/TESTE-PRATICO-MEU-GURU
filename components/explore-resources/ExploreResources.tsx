@@ -2,8 +2,8 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { AssetIcon } from "@/components/asset-icon";
-import type { GeneratedIconKeys } from "../asset-icon/icons.generated";
 import { useStyles } from "@/theme";
+import type { GeneratedIconKeys } from "../asset-icon/icons.generated";
 
 import { createStyles } from "./styles";
 
@@ -59,5 +59,3 @@ export function ExploreResources({
     </View>
   );
 }
-
-

@@ -6,7 +6,6 @@ import { Image, Pressable, Text, View } from "react-native";
 
 import { useStyles } from "@/theme";
 
-import { createStyles } from "./styles";
 import Animated, {
   FadeIn,
   FadeOut,
@@ -14,6 +13,7 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
+import { createStyles } from "./styles";
 
 type Tab = "ia" | "tutores";
 
@@ -123,5 +123,3 @@ export function HomeCard({ activeTab }: HomeCardProps) {
     </Animated.View>
   );
 }
-
-
