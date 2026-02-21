@@ -1,3 +1,3 @@
-import Screen3 from "@/screens/screen3/Screen3";
+import Chat from "@/screens/chat/Chat";
 
-export default Screen3;
+export default Chat;

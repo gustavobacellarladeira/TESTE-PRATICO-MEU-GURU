@@ -1,32 +1,50 @@
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
-import React from "react";
-import { StyleSheet } from "react-native";
+import React, { useEffect, useState } from "react";
+import { Keyboard, StyleSheet } from "react-native";
 
 import { AppHeader } from "@/components/app-header";
 import { AssetIcon } from "@/components/asset-icon";
+import { ChatHeader } from "@/screens/chat/ChatHeader";
 import { useTheme } from "@/theme";
 
 type TabBarIconProps = { color: string; focused: boolean };
 
 export default function TabLayout() {
   const theme = useTheme();
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+
+  useEffect(() => {
+    const show = Keyboard.addListener("keyboardWillShow", () =>
+      setKeyboardVisible(true),
+    );
+    const hide = Keyboard.addListener("keyboardWillHide", () =>
+      setKeyboardVisible(false),
+    );
+    return () => {
+      show.remove();
+      hide.remove();
+    };
+  }, []);
 
   return (
     <Tabs
+      initialRouteName="screen3"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.tabIconActive,
         tabBarInactiveTintColor: theme.colors.tabIconInactive,
-        tabBarStyle: {
-          position: "absolute",
-          backgroundColor: "rgba(255, 255, 255, 0.75)",
-          borderTopWidth: 0,
-          elevation: 0,
-          height: 81,
-          paddingTop: 16,
-          paddingBottom: 16,
-          paddingHorizontal: 8,
-        },
+        tabBarStyle: keyboardVisible
+          ? { display: "none" }
+          : {
+              position: "absolute",
+              backgroundColor: "rgba(255, 255, 255, 0.75)",
+              borderTopWidth: 0,
+              elevation: 0,
+              height: 81,
+              paddingTop: 16,
+              paddingBottom: 16,
+              paddingHorizontal: 8,
+            },
         tabBarBackground: () => (
           <BlurView
             intensity={30}
@@ -60,7 +78,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="screen3"
         options={{
-          title: "Tela 3",
+          title: "Chat",
+          header: () => <ChatHeader />,
           tabBarIcon: ({ color }: TabBarIconProps) => (
             <AssetIcon name="message-icon" size={24} color={color} />
           ),

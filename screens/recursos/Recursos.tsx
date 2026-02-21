@@ -66,7 +66,7 @@ export default function Recursos() {
             ]}
           >
             <View style={styles.iconWrapper}>
-              <AssetIcon name={item.icon} size={24} color="#7A00C6" />
+              <AssetIcon name={item.icon} size={18} color="#7A00C6" />
             </View>
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.cardDescription}>{item.description}</Text>
