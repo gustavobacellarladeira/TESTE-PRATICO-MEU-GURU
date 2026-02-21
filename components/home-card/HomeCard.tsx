@@ -4,7 +4,7 @@ import LottieView from "lottie-react-native";
 import React from "react";
 import { Image, Pressable, Text, View } from "react-native";
 
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 
 import Animated, {
   FadeIn,
@@ -21,36 +21,38 @@ type HomeCardProps = {
   activeTab: Tab;
 };
 
-const CARD_CONTENT: Record<
-  Tab,
-  {
-    title: string;
-    subtitle: string;
-    buttonLabel: string;
-    buttonColor: string;
-    gradient: [string, string, ...string[]];
-  }
-> = {
-  ia: {
-    title: "Resolva com o Guru IA",
-    subtitle: "Receba a resposta na hora com\naté 97% de assertividade",
-    buttonLabel: "Perguntar para IA",
-    buttonColor: "#7A00C6",
-    gradient: ["#E4F1FF", "#F2EAFF", "#FCEBFF", "#F6DFFF"],
-  },
-  tutores: {
-    title: "Resolva com Tutores especialistas",
-    subtitle: "Envie sua atividade e receba tudo\nresolvido até o seu prazo",
-    buttonLabel: "Enviar atividade",
-    buttonColor: "#0D9488",
-    gradient: ["#F6DFFF", "#EBECFF", "#EAF1FF", "#E4F1FF"],
-  },
-};
-
 export function HomeCard({ activeTab }: HomeCardProps) {
   const styles = useStyles(createStyles);
-  const content = CARD_CONTENT[activeTab];
+  const theme = useTheme();
   const router = useRouter();
+
+  const CARD_CONTENT: Record<
+    Tab,
+    {
+      title: string;
+      subtitle: string;
+      buttonLabel: string;
+      buttonColor: string;
+      gradient: [string, string, ...string[]];
+    }
+  > = {
+    ia: {
+      title: "Resolva com o Guru IA",
+      subtitle: "Receba a resposta na hora com\naté 97% de assertividade",
+      buttonLabel: "Perguntar para IA",
+      buttonColor: theme.colors.primary,
+      gradient: theme.gradients.cardIA,
+    },
+    tutores: {
+      title: "Resolva com Tutores especialistas",
+      subtitle: "Envie sua atividade e receba tudo\nresolvido até o seu prazo",
+      buttonLabel: "Enviar atividade",
+      buttonColor: theme.colors.teal,
+      gradient: theme.gradients.cardTutores,
+    },
+  };
+
+  const content = CARD_CONTENT[activeTab];
 
   const scale = useSharedValue(1);
 

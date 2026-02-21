@@ -9,24 +9,24 @@ export const createStyles = (theme: Theme) =>
       backgroundColor: theme.colors.background,
     },
     container: {
-      paddingTop: 16,
-      paddingHorizontal: 24,
+      paddingTop: theme.spacing.lg,
+      paddingHorizontal: theme.spacing["2xl"],
       paddingBottom: 100,
     },
     title: {
-      fontFamily: "Inter-SemiBold",
-      fontSize: 24,
-      fontWeight: "600",
-      lineHeight: 32,
+      fontFamily: theme.typography.fonts.semibold,
+      fontSize: theme.typography.sizes.xl,
+      fontWeight: theme.typography.weights.semibold,
+      lineHeight: theme.typography.lineHeights.xl,
       color: theme.colors.text,
     },
     tabsContainer: {
-      marginTop: 32,
+      marginTop: theme.spacing["3xl"],
     },
     cardContainer: {
-      marginTop: 24,
+      marginTop: theme.spacing["2xl"],
     },
     exploreContainer: {
-      marginTop: 32,
+      marginTop: theme.spacing["3xl"],
     },
   });

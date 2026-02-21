@@ -19,13 +19,13 @@ import Animated, {
 import { AssetIcon } from "@/components/asset-icon";
 import type { GeneratedIconKeys } from "@/components/asset-icon/icons.generated";
 import { GradientText } from "@/components/gradient-text";
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 
 import { createStyles } from "./styles";
 
 type Chip =
   | { type: "icon"; icon: GeneratedIconKeys; label: string }
-  | { type: "image"; source: ReturnType<typeof require>; label: string }
+  | { type: "image"; source: number; label: string }
   | { type: "avatars"; label: string };
 
 const CHIPS: Chip[] = [
@@ -49,6 +49,7 @@ const MAX_INPUT_HEIGHT = LINE_HEIGHT * MAX_LINES;
 
 export default function Chat() {
   const styles = useStyles(createStyles);
+  const theme = useTheme();
   const inputRef = useRef<TextInput>(null);
   const scrollRef = useRef<ScrollView>(null);
   const [text, setText] = useState("");
@@ -105,10 +106,7 @@ export default function Chat() {
           <Text style={styles.greetingText}>Olá, Lucas!</Text>
         </View>
 
-        <GradientText
-          colors={["#7A00C6", "#B453FE", "#8682FF", "#56B8E2"]}
-          style={styles.subtitle}
-        >
+        <GradientText colors={theme.gradients.brand} style={styles.subtitle}>
           Como posso te ajudar?
         </GradientText>
 
@@ -124,7 +122,11 @@ export default function Chat() {
               onPress={() => inputRef.current?.focus()}
             >
               {chip.type === "icon" && (
-                <AssetIcon name={chip.icon} size={18} color="#6B7280" />
+                <AssetIcon
+                  name={chip.icon}
+                  size={18}
+                  color={theme.colors.textMuted}
+                />
               )}
               {chip.type === "image" && (
                 <Image source={chip.source} style={styles.chipImage} />
@@ -154,7 +156,7 @@ export default function Chat() {
       {/* Input bar — absolutely positioned, tracks keyboard pixel-perfectly */}
       <Animated.View style={[styles.inputBarWrapper, inputBarAnimStyle]}>
         <Pressable style={styles.plusButton}>
-          <Ionicons name="add" size={24} color="#374151" />
+          <Ionicons name="add" size={24} color={theme.colors.textBody} />
         </Pressable>
 
         <View style={styles.inputPill}>
@@ -162,7 +164,7 @@ export default function Chat() {
             ref={inputRef}
             style={[styles.input, { height: inputHeight }]}
             placeholder="Pergunte ou tire foto"
-            placeholderTextColor="#374151"
+            placeholderTextColor={theme.colors.textBody}
             value={text}
             onChangeText={setText}
             multiline
@@ -176,7 +178,11 @@ export default function Chat() {
             }}
           />
           <Pressable style={styles.micButton}>
-            <Ionicons name="mic-outline" size={24} color="#374151" />
+            <Ionicons
+              name="mic-outline"
+              size={24}
+              color={theme.colors.textBody}
+            />
           </Pressable>
         </View>
       </Animated.View>

@@ -3,7 +3,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 
 import { AssetIcon } from "@/components/asset-icon";
 import type { GeneratedIconKeys } from "@/components/asset-icon/icons.generated";
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 
 import { createStyles } from "./styles";
 
@@ -48,6 +48,7 @@ const RECURSOS: ResourceItem[] = [
 
 export default function Recursos() {
   const styles = useStyles(createStyles);
+  const theme = useTheme();
 
   return (
     <ScrollView
@@ -66,7 +67,11 @@ export default function Recursos() {
             ]}
           >
             <View style={styles.iconWrapper}>
-              <AssetIcon name={item.icon} size={18} color="#7A00C6" />
+              <AssetIcon
+                name={item.icon}
+                size={18}
+                color={theme.colors.primary}
+              />
             </View>
             <Text style={styles.cardTitle}>{item.title}</Text>
             <Text style={styles.cardDescription}>{item.description}</Text>

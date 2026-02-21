@@ -2,14 +2,14 @@ import { StyleSheet } from "react-native";
 
 import { Theme } from "@/theme";
 
-export const createStyles = (_theme: Theme) =>
+export const createStyles = (theme: Theme) =>
   StyleSheet.create({
     wrapper: {
       flexDirection: "row",
-      borderRadius: 8,
-      backgroundColor: "#FFFFFF",
+      borderRadius: theme.radii.sm,
+      backgroundColor: theme.colors.background,
       borderWidth: 1,
-      borderColor: "#E5E7EB",
+      borderColor: theme.colors.border,
       position: "relative",
     },
     indicator: {
@@ -17,10 +17,10 @@ export const createStyles = (_theme: Theme) =>
       top: -1,
       left: -1,
       bottom: -1,
-      borderRadius: 8,
-      backgroundColor: "#F6EDFB",
+      borderRadius: theme.radii.sm,
+      backgroundColor: theme.colors.surfaceTint,
       borderWidth: 1,
-      borderColor: "#A14BD7",
+      borderColor: theme.colors.primaryMid,
     },
     tab: {
       flex: 1,
@@ -28,21 +28,21 @@ export const createStyles = (_theme: Theme) =>
       alignItems: "center",
       justifyContent: "center",
       gap: 6,
-      paddingVertical: 12,
-      borderRadius: 10,
+      paddingVertical: theme.spacing.md,
+      borderRadius: theme.radii.md,
       zIndex: 1,
     },
     label: {
-      fontFamily: "Inter-Medium",
-      fontSize: 14,
-      fontWeight: "500",
-      lineHeight: 20,
-      color: "#374151",
+      fontFamily: theme.typography.fonts.medium,
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.medium,
+      lineHeight: theme.typography.lineHeights.sm,
+      color: theme.colors.textBody,
     },
     labelActive: {
-      fontFamily: "Inter-SemiBold",
-      fontSize: 14,
-      fontWeight: "600",
-      lineHeight: 20,
+      fontFamily: theme.typography.fonts.semibold,
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.semibold,
+      lineHeight: theme.typography.lineHeights.sm,
     },
   });

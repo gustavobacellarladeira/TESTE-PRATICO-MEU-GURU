@@ -5,7 +5,7 @@ import { ExploreResources } from "@/components/explore-resources";
 import { GradientText } from "@/components/gradient-text";
 import { HomeCard } from "@/components/home-card";
 import { HomeTabs } from "@/components/home-tabs";
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 
 import { createStyles } from "./styles";
 
@@ -13,6 +13,7 @@ type Tab = "ia" | "tutores";
 
 export default function Home() {
   const styles = useStyles(createStyles);
+  const theme = useTheme();
   const [activeTab, setActiveTab] = useState<Tab>("ia");
 
   return (
@@ -21,10 +22,7 @@ export default function Home() {
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
     >
-      <GradientText
-        style={styles.title}
-        colors={["#7A00C6", "#8453FE", "#8682FF", "#56B8E2"]}
-      >
+      <GradientText style={styles.title} colors={theme.gradients.brandAlt}>
         Resolva suas atividades
       </GradientText>
 

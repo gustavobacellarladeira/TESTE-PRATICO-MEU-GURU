@@ -2,7 +2,7 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 
 import { AssetIcon } from "@/components/asset-icon";
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 import type { GeneratedIconKeys } from "../asset-icon/icons.generated";
 
 import { createStyles } from "./styles";
@@ -29,6 +29,7 @@ export function ExploreResources({
   onItemPress,
 }: ExploreResourcesProps) {
   const styles = useStyles(createStyles);
+  const theme = useTheme();
 
   return (
     <View style={styles.wrapper}>
@@ -51,7 +52,11 @@ export function ExploreResources({
             ]}
             onPress={() => onItemPress?.(item.label)}
           >
-            <AssetIcon name={item.icon} size={28} color="#374151" />
+            <AssetIcon
+              name={item.icon}
+              size={28}
+              color={theme.colors.textBody}
+            />
             <Text style={styles.cardLabel}>{item.label}</Text>
           </Pressable>
         ))}

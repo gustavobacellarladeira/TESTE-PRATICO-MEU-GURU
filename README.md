@@ -1,50 +1,332 @@
-# Welcome to your Expo app 👋
+<h1 align="center">
+  <img src="./assets/images/ios-light.png" width="80" height="80" alt="MeuGuru Logo" /><br/>
+  MeuGuru — Teste Prático
+</h1>
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+<p align="center">
+  Implementação <strong>pixel-perfect</strong> de um aplicativo mobile educacional com Expo + React Native, fiel ao design system Figma.
+</p>
 
-## Get started
+<p align="center">
+  <img src="https://img.shields.io/badge/Expo-54-000020?style=for-the-badge&logo=expo&logoColor=white" />
+  <img src="https://img.shields.io/badge/React_Native-0.81-61DAFB?style=for-the-badge&logo=react&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/Redux_Toolkit-2.11-764ABC?style=for-the-badge&logo=redux&logoColor=white" />
+</p>
 
-1. Install dependencies
+---
 
-   ```bash
-   npm install
-   ```
+## 📱 Telas
 
-2. Start the app
+|                                      Home                                       |            Recursos             |                                       Chat                                       |
+| :-----------------------------------------------------------------------------: | :-----------------------------: | :------------------------------------------------------------------------------: |
+| Tabs animadas com pill deslizante, card com gradiente linear e grid de recursos | Grid 2×3 com ícones SVG tipados | Greeting Lottie, chips interativos, input adaptativo com rastreamento de teclado |
 
-   ```bash
-   npx expo start
-   ```
+---
 
-In the output, you'll find options to open the app in a
+## 🏗️ Arquitetura
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+.
+├── app/
+│   ├── _layout.tsx              # Root layout (fontes, splash, Redux Provider)
+│   └── (tabs)/
+│       ├── _layout.tsx          # Tab bar (frosted glass, 3 tabs visíveis)
+│       ├── index.tsx            # → Home
+│       ├── explore.tsx          # → Recursos
+│       └── screen3.tsx          # → Chat (tela padrão)
+│
+├── screens/                     # Lógica + layout de cada tela
+│   ├── home/
+│   │   ├── Home.tsx
+│   │   └── styles.ts
+│   ├── recursos/
+│   │   ├── Recursos.tsx
+│   │   └── styles.ts
+│   └── chat/
+│       ├── Chat.tsx
+│       ├── styles.ts
+│       ├── ChatHeader.tsx
+│       └── ChatHeader.styles.ts
+│
+├── components/                  # Componentes reutilizáveis
+│   ├── app-header/              # Logo + fogo + avatar
+│   ├── asset-icon/              # Sistema SVG autogerado
+│   ├── explore-resources/       # Grid de recursos
+│   ├── gradient-text/           # Texto com gradiente linear
+│   ├── home-card/               # Card animado IA / Tutores
+│   └── home-tabs/               # Tabs com pill animado
+│
+├── theme/                       # Design tokens centralizados
+│   ├── colors.ts                # Paleta semântica light + dark
+│   ├── spacing.ts               # Escala base-4 + border-radius
+│   ├── typography.ts            # Tamanhos, alturas, pesos, fontes
+│   ├── gradients.ts             # Gradientes da marca
+│   └── index.ts                 # Theme interface + useTheme + useStyles
+│
+├── store/                       # Redux Toolkit + redux-persist
+│   ├── index.ts
+│   └── slices/themeSlice.ts
+│
+├── hooks/
+│   └── use-fonts.ts             # Carrega Inter-Regular/Medium/SemiBold
+│
+└── resources/
+    ├── fonts/                   # 3 arquivos TTF (otimizados de 54 → 3)
+    └── icons/                   # SVGs da marca
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🎨 Design System
 
-To learn more about developing your project with Expo, look at the following resources:
+Todos os tokens ficam em `theme/` — **zero hex hardcoded** em componentes ou styles.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### Cores
 
-## Join the community
+```ts
+theme.colors.primary; // #7A00C6  — roxo da marca
+theme.colors.primaryMid; // #A14BD7  — borda do indicador de tab
+theme.colors.primaryLight; // #B453FE  — stop do gradiente
+theme.colors.textBody; // #374151  — ícones e corpo de texto
+theme.colors.textMuted; // #6B7280  — texto secundário
+theme.colors.surface; // #F9FAFB  — fundo de cards
+theme.colors.surfaceMuted; // #F3F4F6  — chips e inputs
+theme.colors.surfaceTint; // #F6EDFB  — tab indicator / bg de ícone
+theme.colors.border; // #E5E7EB  — bordas
+theme.colors.teal; // #0D9488  — accent tutores
+```
 
-Join our community of developers creating universal apps.
+### Espaçamento (escala base-4)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+| Token            | Valor |
+| ---------------- | ----- |
+| `spacing.xs`     | 4px   |
+| `spacing.sm`     | 8px   |
+| `spacing.md`     | 12px  |
+| `spacing.lg`     | 16px  |
+| `spacing.xl`     | 20px  |
+| `spacing["2xl"]` | 24px  |
+| `spacing["3xl"]` | 32px  |
+| `spacing["4xl"]` | 48px  |
+
+### Border Radius
+
+| Token          | Valor                    |
+| -------------- | ------------------------ |
+| `radii.sm`     | 8px                      |
+| `radii.md`     | 10px                     |
+| `radii.lg`     | 12px                     |
+| `radii.xl`     | 16px                     |
+| `radii["2xl"]` | 24px                     |
+| `radii.full`   | 999px — pills e círculos |
+
+### Tipografia
+
+```ts
+theme.typography.fonts.regular   → "Inter-Regular"
+theme.typography.fonts.medium    → "Inter-Medium"
+theme.typography.fonts.semibold  → "Inter-SemiBold"
+
+// Tamanhos:     xs(12)  sm(14)  md(16)  lg(20)  xl(24)
+// Line heights: xs(16)  sm(20)  md(24)  lg(28)  xl(32)
+// Pesos:        regular(400) medium(500) semibold(600) bold(700)
+```
+
+### Gradientes
+
+```ts
+theme.gradients.brand; // [#7A00C6, #B453FE, #8682FF, #56B8E2] — brand principal
+theme.gradients.brandAlt; // [#7A00C6, #8453FE, #8682FF, #56B8E2] — title home
+theme.gradients.cardIA; // [#E4F1FF, #F2EAFF, #FCEBFF, #F6DFFF] — card IA
+theme.gradients.cardTutores; // [#F6DFFF, #EBECFF, #EAF1FF, #E4F1FF] — card tutores
+```
+
+---
+
+## 🧩 Componentes
+
+### `<AssetIcon />`
+
+Sistema de ícones SVG completamente tipado. O script `generate-icons.js` varre `resources/icons/`, gera `icons.generated.ts` com todas as chaves e um componente que importa via `react-native-svg-transformer`.
+
+```tsx
+// TypeScript acusa erro se o ícone não existir
+<AssetIcon name="fire-icon" size={20} color={theme.colors.primary} />
+```
+
+### `<GradientText />`
+
+Texto com gradiente linear usando `@react-native-masked-view` + `expo-linear-gradient`.
+
+```tsx
+<GradientText colors={theme.gradients.brand} style={styles.title}>
+  Resolva suas atividades
+</GradientText>
+```
+
+### `<HomeTabs />`
+
+Tabs com pill indicator deslizante animado via `useSharedValue` + `withSpring`. Ícone ativo recebe o gradiente da marca via `GradientText`.
+
+### `<HomeCard />`
+
+Card com `LinearGradient` que troca de conteúdo (IA ↔ Tutores) com animação `FadeIn/FadeOut`. Botão com micro-animação de escala no press.
+
+### `<ExploreResources />`
+
+Grid 2 colunas de recursos navegáveis com feedback de opacidade no press.
+
+---
+
+## 💬 Chat
+
+### Rastreamento de teclado
+
+Sem `KeyboardAvoidingView`. A barra de input é `position: absolute` e sobe pixel-a-pixel com o teclado:
+
+```ts
+Keyboard.addListener("keyboardWillShow", (e) => {
+  keyboardHeight.value = e.endCoordinates.height; // snap instantâneo
+});
+
+const inputBarAnimStyle = useAnimatedStyle(() => ({
+  bottom: keyboardHeight.value,
+  paddingBottom: Math.max(12, 89 - keyboardHeight.value),
+  shadowOpacity: keyboardHeight.value > 0 ? 0.06 : 0,
+}));
+```
+
+O conteúdo da tela permanece **completamente estático** enquanto o input sobe.
+
+### Input dinâmico
+
+Cresce linha a linha até 3 linhas, depois habilita scroll interno:
+
+```ts
+const MAX_LINES = 3;
+const LINE_HEIGHT = 20;
+
+onContentSizeChange={(e) => {
+  const h = Math.min(e.nativeEvent.contentSize.height, MAX_LINES * LINE_HEIGHT);
+  setInputHeight(Math.max(h, LINE_HEIGHT));
+}}
+```
+
+### Tipos de chip
+
+| Tipo      | Renderização                                      |
+| --------- | ------------------------------------------------- |
+| `icon`    | `<AssetIcon />` — SVG tipado                      |
+| `image`   | `<Image source={require(...)} />` — PNG local     |
+| `avatars` | Stack de avatares sobrepostos com offset negativo |
+
+---
+
+## 🗂️ Padrão de styles
+
+Cada componente tem `styles.ts` com `createStyles(theme)` — sem StyleSheet inline no componente:
+
+```ts
+// components/algum-componente/styles.ts
+export const createStyles = (theme: Theme) =>
+  StyleSheet.create({
+    container: {
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: theme.spacing["2xl"],
+      borderRadius: theme.radii.lg,
+    },
+  });
+```
+
+```tsx
+// components/algum-componente/AComponente.tsx
+export function AComponente() {
+  const styles = useStyles(createStyles); // lê tema do Redux
+  return <View style={styles.container} />;
+}
+```
+
+> Quando o tema muda (light ↔ dark), todos os componentes re-renderizam automaticamente via `useAppSelector`.
+
+---
+
+## 🔧 Estado Global
+
+```
+store/
+├── index.ts           # configureStore + redux-persist (AsyncStorage)
+└── slices/
+    └── themeSlice.ts  # { mode: "light" | "dark" }
+```
+
+Persiste apenas o slice de tema. `whitelist: ["theme"]` garante que estado transitório não seja persistido.
+
+---
+
+## 🔤 Otimização de Fontes
+
+Foram removidos **51 arquivos TTF** desnecessários (variantes não usadas de 18pt + todos os arquivos 24pt e 28pt). O app carrega apenas o necessário:
+
+```ts
+useFonts({
+  "Inter-Regular": require("@/resources/fonts/Inter_18pt-Regular.ttf"),
+  "Inter-Medium": require("@/resources/fonts/Inter_18pt-Medium.ttf"),
+  "Inter-SemiBold": require("@/resources/fonts/Inter_18pt-SemiBold.ttf"),
+});
+```
+
+---
+
+## ⚙️ Tab Bar
+
+- **3 tabs visíveis:** Home · Recursos · Chat
+- `expo-blur` para efeito frosted glass
+- `initialRouteName="screen3"` → Chat como tela padrão ao abrir o app
+- Tabs 4 e 5 exibem ícones mas têm `tabPress` bloqueado (`e.preventDefault()`)
+
+---
+
+## 🚀 Como rodar
+
+```bash
+# Instalar dependências
+yarn install
+
+# iOS (requer Xcode)
+yarn ios
+
+# Android (requer Android Studio)
+yarn android
+
+# Web
+yarn web
+```
+
+> Requer Expo Go ou build de desenvolvimento com `expo-dev-client`.
+
+---
+
+## 🛠️ Stack completa
+
+| Tecnologia                     | Versão | Função                              |
+| ------------------------------ | ------ | ----------------------------------- |
+| Expo                           | ~54    | Framework principal                 |
+| Expo Router                    | ~6.0   | Navegação file-based                |
+| React Native                   | 0.81   | Runtime mobile                      |
+| TypeScript                     | ~5.9   | Tipagem estática                    |
+| Redux Toolkit                  | 2.11   | Estado global                       |
+| redux-persist                  | 6.0    | Persistência do tema                |
+| react-native-reanimated        | ~4.1   | Animações performáticas (UI thread) |
+| expo-linear-gradient           | ~15.0  | Gradientes                          |
+| expo-blur                      | ~15.0  | Frosted glass no tab bar            |
+| lottie-react-native            | ~7.3   | Animações Lottie                    |
+| react-native-svg + transformer | 15.12  | Sistema de ícones SVG               |
+| @react-native-masked-view      | 0.3    | GradientText                        |
+| react-native-safe-area-context | ~5.6   | Insets de área segura               |
+
+---
+
+<p align="center">
+  Feito com 💜 por <strong>Gustavo Bacellar</strong>
+</p>

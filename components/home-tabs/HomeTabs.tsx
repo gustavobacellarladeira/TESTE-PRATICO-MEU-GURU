@@ -8,7 +8,7 @@ import Animated, {
 
 import { AssetIcon } from "@/components/asset-icon";
 import { GradientText } from "@/components/gradient-text";
-import { useStyles } from "@/theme";
+import { useStyles, useTheme } from "@/theme";
 
 import { createStyles } from "./styles";
 
@@ -25,18 +25,16 @@ const SPRING = {
   overshootClamping: true,
 };
 
-const GRADIENT_COLORS: [string, string, ...string[]] = [
-  "#7A00C6",
-  "#B453FE",
-  "#8682FF",
-  "#56B8E2",
-];
-
-const INACTIVE_COLORS: [string, string] = ["#374151", "#374151"];
-
 export function HomeTabs({ onChange }: HomeTabsProps) {
   const styles = useStyles(createStyles);
+  const theme = useTheme();
   const [active, setActive] = useState<Tab>("ia");
+
+  const gradientColors = theme.gradients.brand;
+  const inactiveColors: [string, string] = [
+    theme.colors.textBody,
+    theme.colors.textBody,
+  ];
   const tabWidth = useSharedValue(0);
   const translateX = useSharedValue(0);
 
@@ -76,10 +74,10 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
         <AssetIcon
           name="logo-icon"
           size={18}
-          color={active === "ia" ? "#7A00C6" : "#374151"}
+          color={active === "ia" ? theme.colors.primary : theme.colors.textBody}
         />
         <GradientText
-          colors={active === "ia" ? GRADIENT_COLORS : INACTIVE_COLORS}
+          colors={active === "ia" ? gradientColors : inactiveColors}
           style={active === "ia" ? styles.labelActive : styles.label}
         >
           Com a IA
@@ -96,10 +94,12 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
         <AssetIcon
           name="fa-chalkboard-teacher-icon"
           size={18}
-          color={active === "tutores" ? "#7A00C6" : "#374151"}
+          color={
+            active === "tutores" ? theme.colors.primary : theme.colors.textBody
+          }
         />
         <GradientText
-          colors={active === "tutores" ? GRADIENT_COLORS : INACTIVE_COLORS}
+          colors={active === "tutores" ? gradientColors : inactiveColors}
           style={active === "tutores" ? styles.labelActive : styles.label}
         >
           Com tutores

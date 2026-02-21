@@ -2,20 +2,20 @@ import { StyleSheet } from "react-native";
 
 import { Theme } from "@/theme";
 
-export const createStyles = (_theme: Theme) =>
+export const createStyles = (theme: Theme) =>
   StyleSheet.create({
     cardOuter: {
-      borderRadius: 12,
+      borderRadius: theme.radii.lg,
       overflow: "hidden",
     },
     card: {
-      padding: 16,
+      padding: theme.spacing.lg,
       alignItems: "center",
     },
     lottieWrapper: {
       width: 64,
       height: 64,
-      marginBottom: 16,
+      marginBottom: theme.spacing.lg,
     },
     lottie: {
       width: 64,
@@ -25,51 +25,51 @@ export const createStyles = (_theme: Theme) =>
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "center",
-      marginBottom: 16,
+      marginBottom: theme.spacing.lg,
       height: 64,
     },
     avatar: {
       width: 48,
       height: 48,
-      borderRadius: 24,
+      borderRadius: theme.radii["2xl"],
     },
     avatarOffset1: {
-      marginLeft: -4,
+      marginLeft: -theme.spacing.xs,
     },
     avatarOffset2: {
-      marginLeft: -4,
+      marginLeft: -theme.spacing.xs,
     },
     title: {
-      fontFamily: "Inter-SemiBold",
-      fontSize: 16,
-      fontWeight: "600",
-      lineHeight: 24,
-      color: "#111827",
+      fontFamily: theme.typography.fonts.semibold,
+      fontSize: theme.typography.sizes.md,
+      fontWeight: theme.typography.weights.semibold,
+      lineHeight: theme.typography.lineHeights.md,
+      color: theme.colors.text,
       textAlign: "center",
-      marginBottom: 4,
+      marginBottom: theme.spacing.xs,
     },
     subtitle: {
-      fontFamily: "Inter-Regular",
-      fontSize: 14,
-      fontWeight: "400",
-      lineHeight: 20,
-      color: "#6B7280",
+      fontFamily: theme.typography.fonts.regular,
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.regular,
+      lineHeight: theme.typography.lineHeights.sm,
+      color: theme.colors.textMuted,
       textAlign: "center",
-      marginBottom: 16,
+      marginBottom: theme.spacing.lg,
     },
     buttonWrapper: {
       alignSelf: "stretch",
     },
     button: {
       paddingVertical: 14,
-      borderRadius: 999,
-      backgroundColor: "#FFFFFF",
+      borderRadius: theme.radii.full,
+      backgroundColor: theme.colors.background,
       alignItems: "center",
     },
     buttonLabel: {
-      fontFamily: "Inter-Medium",
-      fontSize: 14,
-      fontWeight: "500",
-      lineHeight: 20,
+      fontFamily: theme.typography.fonts.medium,
+      fontSize: theme.typography.sizes.sm,
+      fontWeight: theme.typography.weights.medium,
+      lineHeight: theme.typography.lineHeights.sm,
     },
   });

@@ -2,22 +2,22 @@ import { StyleSheet } from "react-native";
 
 import { Theme } from "@/theme";
 
-export const createStyles = (_theme: Theme) =>
+export const createStyles = (theme: Theme) =>
   StyleSheet.create({
     container: {
       width: "100%",
       flexDirection: "row",
       alignItems: "center",
       justifyContent: "space-between",
-      paddingHorizontal: 24,
-      paddingBottom: 12,
-      backgroundColor: "#FFFFFF",
+      paddingHorizontal: theme.spacing["2xl"],
+      paddingBottom: theme.spacing.md,
+      backgroundColor: theme.colors.background,
     },
     cameraButton: {
       width: 40,
       height: 40,
-      borderRadius: 999,
-      backgroundColor: "#F9FAFB",
+      borderRadius: theme.radii.full,
+      backgroundColor: theme.colors.surface,
       alignItems: "center",
       justifyContent: "center",
       paddingVertical: 10,
@@ -26,20 +26,20 @@ export const createStyles = (_theme: Theme) =>
     centerPill: {
       flexDirection: "row",
       alignItems: "center",
-      gap: 8,
-      paddingVertical: 8,
-      paddingHorizontal: 12,
-      borderRadius: 12,
+      gap: theme.spacing.sm,
+      paddingVertical: theme.spacing.sm,
+      paddingHorizontal: theme.spacing.md,
+      borderRadius: theme.radii.lg,
       borderWidth: 1,
-      borderColor: "#E5E7EB",
-      backgroundColor: "#FFFFFF",
+      borderColor: theme.colors.border,
+      backgroundColor: theme.colors.background,
       height: 32,
     },
     centerLabel: {
-      fontFamily: "Inter-Medium",
-      fontSize: 12,
-      fontWeight: "500",
-      lineHeight: 16,
-      color: "#374151",
+      fontFamily: theme.typography.fonts.medium,
+      fontSize: theme.typography.sizes.xs,
+      fontWeight: theme.typography.weights.medium,
+      lineHeight: theme.typography.lineHeights.xs,
+      color: theme.colors.textBody,
     },
   });
