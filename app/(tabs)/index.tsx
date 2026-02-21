@@ -1,3 +1,3 @@
-import Screen1 from "@/screens/screen1/Screen1";
+import Home from "@/screens/home/Home";
 
-export default Screen1;
+export default Home;

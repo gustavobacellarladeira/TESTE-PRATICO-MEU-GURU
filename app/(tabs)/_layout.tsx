@@ -42,7 +42,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: "Tela 1",
+          title: "Home",
           tabBarIcon: ({ color }: TabBarIconProps) => (
             <AssetIcon name="home-icon" size={24} color={color} />
           ),
@@ -51,7 +51,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="screen2"
         options={{
-          title: "Tela 2",
+          title: "Recursos",
           tabBarIcon: ({ color }: TabBarIconProps) => (
             <AssetIcon name="tools-icon" size={24} color={color} />
           ),

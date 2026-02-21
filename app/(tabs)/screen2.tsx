@@ -1,3 +1,3 @@
-import Screen2 from "@/screens/screen2/Screen2";
+import Recursos from "@/screens/recursos/Recursos";
 
-export default Screen2;
+export default Recursos;
