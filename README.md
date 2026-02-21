@@ -20,7 +20,7 @@
 
 |   Plataforma   | Como testar                                                                                                                                  |
 | :------------: | :------------------------------------------------------------------------------------------------------------------------------------------- |
-| 🤖 **Android** | APK gerado via EAS Build (113 MB — excede o limite do GitHub). Solicite o arquivo diretamente ou gere localmente com `eas build --profile preview --platform android`. |
+| 🤖 **Android** | O arquivo APK excede o limite de 100 MB do GitHub e não pode ser hospedado aqui. **Entre em contato para receber o APK diretamente.** |
 |   🍎 **iOS**   | Build disponível via **TestFlight**. Entre em contato para receber o convite de acesso.                                                      |
 
 ---
