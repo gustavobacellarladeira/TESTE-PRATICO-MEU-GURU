@@ -93,6 +93,7 @@ export default function TabLayout() {
             <AssetIcon name="camera-icon" size={24} color={color} />
           ),
         }}
+        listeners={{ tabPress: (e) => e.preventDefault() }}
       />
       <Tabs.Screen
         name="screen5"
@@ -106,6 +107,7 @@ export default function TabLayout() {
             />
           ),
         }}
+        listeners={{ tabPress: (e) => e.preventDefault() }}
       />
     </Tabs>
   );

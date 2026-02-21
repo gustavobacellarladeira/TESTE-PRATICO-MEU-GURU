@@ -1,5 +1,5 @@
-import React, { useCallback, useRef, useState } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useCallback, useState } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -7,6 +7,7 @@ import Animated, {
 } from "react-native-reanimated";
 
 import { AssetIcon } from "@/components/asset-icon";
+import { GradientText } from "@/components/gradient-text";
 
 type Tab = "ia" | "tutores";
 
@@ -14,35 +15,48 @@ type HomeTabsProps = {
   onChange?: (tab: Tab) => void;
 };
 
-const SPRING = { damping: 18, stiffness: 200, mass: 0.8 };
+const SPRING = {
+  damping: 25,
+  stiffness: 250,
+  mass: 0.8,
+  overshootClamping: true,
+};
+
+const GRADIENT_COLORS: [string, string, ...string[]] = [
+  "#7A00C6",
+  "#B453FE",
+  "#8682FF",
+  "#56B8E2",
+];
+
+const INACTIVE_COLORS: [string, string] = ["#374151", "#374151"];
 
 export function HomeTabs({ onChange }: HomeTabsProps) {
   const [active, setActive] = useState<Tab>("ia");
-  const containerWidth = useRef(0);
-
+  const tabWidth = useSharedValue(0);
   const translateX = useSharedValue(0);
 
   const indicatorStyle = useAnimatedStyle(() => ({
     transform: [{ translateX: translateX.value }],
+    width: tabWidth.value,
   }));
 
   const handlePress = useCallback(
     (tab: Tab) => {
       setActive(tab);
       onChange?.(tab);
-      translateX.value = withSpring(
-        tab === "ia" ? 0 : containerWidth.current / 2,
-        SPRING,
-      );
+      translateX.value = withSpring(tab === "ia" ? 0 : tabWidth.value, SPRING);
     },
-    [onChange, translateX],
+    [onChange, translateX, tabWidth],
   );
 
   return (
     <View
       style={styles.wrapper}
       onLayout={(e) => {
-        containerWidth.current = e.nativeEvent.layout.width;
+        const w = e.nativeEvent.layout.width;
+        tabWidth.value = w / 2;
+        translateX.value = 0;
       }}
     >
       {/* Sliding pill indicator */}
@@ -56,13 +70,16 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
         accessibilityState={{ selected: active === "ia" }}
       >
         <AssetIcon
-          name="chalkboard-mini-icon"
-          size={20}
-          color={active === "ia" ? "#7A00C6" : "#6B7280"}
+          name="logo-icon"
+          size={18}
+          color={active === "ia" ? "#7A00C6" : "#374151"}
         />
-        <Text style={[styles.label, active === "ia" && styles.labelActive]}>
+        <GradientText
+          colors={active === "ia" ? GRADIENT_COLORS : INACTIVE_COLORS}
+          style={active === "ia" ? styles.labelActive : styles.label}
+        >
           Com a IA
-        </Text>
+        </GradientText>
       </Pressable>
 
       {/* Tab: Com tutores */}
@@ -73,15 +90,16 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
         accessibilityState={{ selected: active === "tutores" }}
       >
         <AssetIcon
-          name="logo-icon"
-          size={20}
-          color={active === "tutores" ? "#7A00C6" : "#6B7280"}
+          name="fa-chalkboard-teacher-icon"
+          size={18}
+          color={active === "tutores" ? "#7A00C6" : "#374151"}
         />
-        <Text
-          style={[styles.label, active === "tutores" && styles.labelActive]}
+        <GradientText
+          colors={active === "tutores" ? GRADIENT_COLORS : INACTIVE_COLORS}
+          style={active === "tutores" ? styles.labelActive : styles.label}
         >
           Com tutores
-        </Text>
+        </GradientText>
       </Pressable>
     </View>
   );
@@ -90,29 +108,28 @@ export function HomeTabs({ onChange }: HomeTabsProps) {
 const styles = StyleSheet.create({
   wrapper: {
     flexDirection: "row",
-    borderRadius: 12,
-    backgroundColor: "#F3F4F6",
-    padding: 4,
+    borderRadius: 8,
+    backgroundColor: "#FFFFFF",
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
     position: "relative",
-    overflow: "hidden",
   },
   indicator: {
     position: "absolute",
-    top: 4,
-    left: 4,
-    bottom: 4,
-    width: "50%",
-    borderRadius: 10,
-    backgroundColor: "#EDE9FE",
-    borderWidth: 1.5,
-    borderColor: "#7A00C6",
+    top: -1,
+    left: -1,
+    bottom: -1,
+    borderRadius: 8,
+    backgroundColor: "#F6EDFB",
+    borderWidth: 1,
+    borderColor: "#A14BD7",
   },
   tab: {
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
-    gap: 8,
+    gap: 6,
     paddingVertical: 12,
     borderRadius: 10,
     zIndex: 1,
@@ -121,11 +138,13 @@ const styles = StyleSheet.create({
     fontFamily: "Inter-Medium",
     fontSize: 14,
     fontWeight: "500",
-    color: "#6B7280",
+    lineHeight: 20,
+    color: "#374151",
   },
   labelActive: {
     fontFamily: "Inter-SemiBold",
+    fontSize: 14,
     fontWeight: "600",
-    color: "#7A00C6",
+    lineHeight: 20,
   },
 });

@@ -9,15 +9,15 @@ export function ChatHeader() {
   return (
     <View style={[styles.container, { paddingTop: insets.top + 12 }]}>
       {/* Left: camera */}
-      <Pressable hitSlop={8}>
-        <AssetIcon name="camera-icon" size={24} color="#374151" />
+      <Pressable style={styles.cameraButton} hitSlop={8}>
+        <AssetIcon name="camera-icon" size={20} color="#374151" />
       </Pressable>
 
       {/* Center: Guru IA selector */}
       <Pressable style={styles.centerPill}>
-        <AssetIcon name="logo-icon" size={18} color="#7A00C6" />
+        <AssetIcon name="logo-icon" size={16} color="#7A00C6" />
         <Text style={styles.centerLabel}>Guru IA</Text>
-        <Ionicons name="chevron-down" size={14} color="#374151" />
+        <Ionicons name="chevron-down" size={16} color="#374151" />
       </Pressable>
 
       {/* Right: menu */}
@@ -38,21 +38,33 @@ const styles = StyleSheet.create({
     paddingBottom: 12,
     backgroundColor: "#FFFFFF",
   },
+  cameraButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 999,
+    backgroundColor: "#F9FAFB",
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+  },
   centerPill: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+    gap: 8,
     paddingVertical: 8,
-    paddingHorizontal: 14,
-    borderRadius: 999,
+    paddingHorizontal: 12,
+    borderRadius: 12,
     borderWidth: 1,
     borderColor: "#E5E7EB",
     backgroundColor: "#FFFFFF",
+    height: 32,
   },
   centerLabel: {
     fontFamily: "Inter-Medium",
-    fontSize: 14,
+    fontSize: 12,
     fontWeight: "500",
+    lineHeight: 16,
     color: "#374151",
   },
 });

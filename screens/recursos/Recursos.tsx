@@ -20,7 +20,7 @@ const RECURSOS: ResourceItem[] = [
     description: "Memorize a matéria\ncom cartões",
   },
   {
-    icon: "checklist-icon",
+    icon: "file-text-icon",
     title: "Provas",
     description: "Crie provas com a IA\nem segundos",
   },

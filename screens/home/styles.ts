@@ -21,12 +21,12 @@ export const createStyles = (theme: Theme) =>
       color: theme.colors.text,
     },
     tabsContainer: {
-      marginTop: 16,
+      marginTop: 32,
     },
     cardContainer: {
-      marginTop: 16,
+      marginTop: 24,
     },
     exploreContainer: {
-      marginTop: 24,
+      marginTop: 32,
     },
   });
