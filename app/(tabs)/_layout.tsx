@@ -29,7 +29,7 @@ export default function TabLayout() {
 
   return (
     <Tabs
-      initialRouteName="screen3"
+      initialRouteName="chat"
       screenOptions={{
         tabBarActiveTintColor: theme.colors.tabIconActive,
         tabBarInactiveTintColor: theme.colors.tabIconInactive,
@@ -59,6 +59,10 @@ export default function TabLayout() {
     >
       <Tabs.Screen
         name="index"
+        options={{ href: null }}
+      />
+      <Tabs.Screen
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: ({ color }: TabBarIconProps) => (
@@ -67,7 +71,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="screen2"
+        name="recursos"
         options={{
           title: "Recursos",
           tabBarIcon: ({ color }: TabBarIconProps) => (
@@ -76,7 +80,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="screen3"
+        name="chat"
         options={{
           title: "Chat",
           header: () => <ChatHeader />,

@@ -16,11 +16,119 @@
 
 ---
 
+## 📲 Download & Teste
+
+|   Plataforma   | Como testar                                                                                                                                    |
+| :------------: | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| 🤖 **Android** | APK disponível na pasta [`/android`](./android) deste repositório. Baixe o arquivo `.apk`, transfira para o dispositivo e instale diretamente. |
+|   🍎 **iOS**   | Build disponível via **TestFlight**. Entre em contato para receber o convite de acesso.                                                        |
+
+---
+
 ## 📱 Telas
 
-|                                      Home                                       |            Recursos             |                                       Chat                                       |
-| :-----------------------------------------------------------------------------: | :-----------------------------: | :------------------------------------------------------------------------------: |
-| Tabs animadas com pill deslizante, card com gradiente linear e grid de recursos | Grid 2×3 com ícones SVG tipados | Greeting Lottie, chips interativos, input adaptativo com rastreamento de teclado |
+### 🏠 Home (`screens/home/Home.tsx`)
+
+Tela principal do app, composta por quatro blocos empilhados em um `ScrollView`.
+
+#### 1 — Título com gradiente
+`GradientText` renderiza "Resolva suas atividades" com o gradiente `brandAlt` (`#7A00C6 → #8453FE → #8682FF → #56B8E2`), usando `@react-native-masked-view` + `expo-linear-gradient` por baixo dos panos.
+
+#### 2 — HomeTabs (seletor IA / Tutores)
+Dois botões lado a lado com um **pill indicator deslizante** que anima via `useSharedValue` + `withSpring` (parâmetros calibrados: `damping 25`, `stiffness 250`, `overshootClamping: true`).
+
+| Estado | Ícone | Texto |
+|---|---|---|
+| Ativo | `logo-icon` ou `fa-chalkboard-teacher-icon` com `colors.primary` | `GradientText` com `gradients.brand` |
+| Inativo | mesmos ícones com `colors.textBody` | texto simples (`colors.textBody`) |
+
+A seleção é propagada para cima via prop `onChange` e controla o estado `activeTab` na Home.
+
+#### 3 — HomeCard (card dinâmico)
+Card com fundo `LinearGradient` que troca **todo o conteúdo** ao mudar de tab, com animação `FadeIn` (300 ms + spring) na entrada e `FadeOut` (150 ms) na saída (Reanimated 4).
+
+| Tab | Gradiente de fundo | Ícone principal | Botão | Ação |
+|---|---|---|---|---|
+| **Com a IA** | `cardIA` — tons azul/lilás claros | Lottie animado em loop | "Perguntar para IA" (roxo `primary`) | Navega para `/(tabs)/chat` |
+| **Com tutores** | `cardTutores` — tons lilás/azul claros | Stack de 3 avatars sobrepostos | "Enviar atividade" (teal `#0D9488`) | — |
+
+O botão tem micro-animação de escala ao pressionar: `scale → 0.96` no `onPressIn` e volta a `1` no `onPressOut`, ambos via `withSpring`.
+
+#### 4 — ExploreResources (grid de atalhos)
+Grid 2 colunas com cabeçalho "Explore mais recursos" + link "Ver todos" (roxa). Quatro cards com ícone SVG + label, feedback de opacidade (0.75) no press.
+
+| Ícone | Label |
+|---|---|
+| `camera-icon` | Resolvedor de tarefas |
+| `microphone-icon` | Gravador de aula |
+| `checklist-icon` | Gerar prova |
+| `cards-icon` | Gerar flashcard |
+
+---
+
+### 📚 Recursos (`screens/recursos/Recursos.tsx`)
+
+Tela de catálogo de ferramentas. Título "Recursos" em semibold e grid **2 colunas × 3 linhas** (6 cards).
+
+Cada card contém:
+- **Ícone wrapper** — círculo com `backgroundColor: colors.surfaceTint`, `AssetIcon` roxo `colors.primary`
+- **Título** — semibold 14px
+- **Descrição** — regular 12px, `colors.textMuted`, quebra de linha explícita (`\n`)
+- **Press feedback** — opacidade 0.7
+
+| Ícone | Título | Descrição |
+|---|---|---|
+| `cards-icon` | Flashcards | Memorize a matéria com cartões |
+| `file-text-icon` | Provas | Crie provas com a IA em segundos |
+| `photo-icon` | Imagem | Gere imagens únicas em segundos |
+| `notes-icon` | Documento | Gere documentos completos |
+| `pencil-icon` | Humanizador | Remova o tom de IA do texto |
+| `align-justified-icon` | Resumo | Resuma textos rapidamente |
+
+---
+
+### 💬 Chat (`screens/chat/Chat.tsx`)
+
+Tela padrão ao abrir o app (`initialRouteName="chat"`). Header customizado via `ChatHeader`, conteúdo centralizado em `ScrollView` e barra de input absolutamente posicionada.
+
+#### Header — `ChatHeader.tsx`
+Três zonas horizontais:
+- **Esquerda** — `Pressable` com `camera-icon` (fundo `surface`, pill arredondado)
+- **Centro** — pill com `logo-icon` + texto "Guru IA" + `chevron-down` (`Ionicons`) — seletor de modelo
+- **Direita** — `Pressable` com `menu-icon`
+
+#### Greeting
+`LottieView` (35×50, autoPlay + loop) + texto "Olá, Lucas!" com `colors.primary`.
+
+#### Subtítulo
+`GradientText` "Como posso te ajudar?" com `gradients.brand`.
+
+#### Chips de sugestão
+4 chips em pill (`borderRadius: full`, fundo `surfaceMuted`), cada um abre o teclado ao ser pressionado (`inputRef.current?.focus()`):
+
+| Tipo | Conteúdo | Label |
+|---|---|---|
+| `icon` | `AssetIcon` `bg_removal-icon` | Resolvedor de tarefas |
+| `image` | PNG `camera-full-icon` | Explorar recursos |
+| `image` | PNG `tools-icon` | Enviar foto da questão |
+| `avatars` | Stack de 3 avatars (offset -4px) | Resolver atividade com Tutores |
+
+#### Barra de input (absolutamente posicionada)
+Três elementos em linha:
+
+| Elemento | Detalhe |
+|---|---|
+| **Botão `+`** | Círculo 48px, `surfaceMuted`, ícone `add` (Ionicons) |
+| **Pill de texto** | `flex: 1`, fundo `surfaceMuted`, placeholder "Pergunte ou tire foto" |
+| **Mic / Send** | `mic-outline` (inativo) → `send` roxo `colors.primary` (teclado aberto) |
+
+O ícone de microfone muda para **send** assim que o teclado abre (`isKeyboardOpen` state); clicar no send chama `Keyboard.dismiss()`.
+
+#### Rastreamento de teclado
+Sem `KeyboardAvoidingView`. `keyboardWillShow` escreve a altura direto em `useSharedValue` → `useAnimatedStyle` move o wrapper pixel-a-pixel no UI thread. A tab bar some via `display: "none"` enquanto o teclado está aberto.
+
+#### Input adaptativo
+Cresce linha a linha até 3 linhas (`MAX_INPUT_HEIGHT = 60px`), depois habilita scroll interno (`scrollEnabled`).
 
 ---
 
@@ -33,8 +141,8 @@
 │   └── (tabs)/
 │       ├── _layout.tsx          # Tab bar (frosted glass, 3 tabs visíveis)
 │       ├── index.tsx            # → Home
-│       ├── explore.tsx          # → Recursos
-│       └── screen3.tsx          # → Chat (tela padrão)
+│       ├── recursos.tsx         # → Recursos
+│       └── chat.tsx             # → Chat (tela padrão)
 │
 ├── screens/                     # Lógica + layout de cada tela
 │   ├── home/
@@ -282,7 +390,7 @@ useFonts({
 
 - **3 tabs visíveis:** Home · Recursos · Chat
 - `expo-blur` para efeito frosted glass
-- `initialRouteName="screen3"` → Chat como tela padrão ao abrir o app
+- `initialRouteName="chat"` → Chat como tela padrão ao abrir o app
 - Tabs 4 e 5 exibem ícones mas têm `tabPress` bloqueado (`e.preventDefault()`)
 
 ---

@@ -54,6 +54,7 @@ export default function Chat() {
   const scrollRef = useRef<ScrollView>(null);
   const [text, setText] = useState("");
   const [inputHeight, setInputHeight] = useState(LINE_HEIGHT);
+  const [isKeyboardOpen, setIsKeyboardOpen] = useState(false);
   const headerHeight = useHeaderHeight();
 
   const keyboardHeight = useSharedValue(0);
@@ -61,9 +62,11 @@ export default function Chat() {
   useEffect(() => {
     const show = Keyboard.addListener("keyboardWillShow", (e) => {
       keyboardHeight.value = e.endCoordinates.height;
+      setIsKeyboardOpen(true);
     });
     const hide = Keyboard.addListener("keyboardWillHide", () => {
       keyboardHeight.value = 0;
+      setIsKeyboardOpen(false);
     });
     return () => {
       show.remove();
@@ -177,11 +180,16 @@ export default function Chat() {
               setInputHeight(Math.max(h, LINE_HEIGHT));
             }}
           />
-          <Pressable style={styles.micButton}>
+          <Pressable
+            style={styles.micButton}
+            onPress={isKeyboardOpen ? () => Keyboard.dismiss() : undefined}
+          >
             <Ionicons
-              name="mic-outline"
+              name={isKeyboardOpen ? "send" : "mic-outline"}
               size={24}
-              color={theme.colors.textBody}
+              color={
+                isKeyboardOpen ? theme.colors.primary : theme.colors.textBody
+              }
             />
           </Pressable>
         </View>

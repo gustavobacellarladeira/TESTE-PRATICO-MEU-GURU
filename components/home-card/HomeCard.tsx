@@ -114,7 +114,7 @@ export function HomeCard({ activeTab }: HomeCardProps) {
             onPressOut={() => {
               scale.value = withSpring(1, { damping: 15, stiffness: 300 });
             }}
-            onPress={() => activeTab === "ia" && router.push("/(tabs)/screen3")}
+            onPress={() => activeTab === "ia" && router.push("/(tabs)/chat")}
           >
             <Text style={[styles.buttonLabel, { color: content.buttonColor }]}>
               {content.buttonLabel}
