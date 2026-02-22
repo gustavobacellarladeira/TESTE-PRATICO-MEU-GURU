@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   Image,
   Keyboard,
+  Platform,
   Pressable,
   ScrollView,
   Text,
@@ -60,11 +61,16 @@ export default function Chat() {
   const keyboardHeight = useSharedValue(0);
 
   useEffect(() => {
-    const show = Keyboard.addListener("keyboardWillShow", (e) => {
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const show = Keyboard.addListener(showEvent, (e) => {
       keyboardHeight.value = e.endCoordinates.height;
       setIsKeyboardOpen(true);
     });
-    const hide = Keyboard.addListener("keyboardWillHide", () => {
+    const hide = Keyboard.addListener(hideEvent, () => {
       keyboardHeight.value = 0;
       setIsKeyboardOpen(false);
     });
@@ -74,14 +80,16 @@ export default function Chat() {
     };
   }, [keyboardHeight]);
 
+  const isAndroid = Platform.OS === "android";
+
   const inputBarAnimStyle = useAnimatedStyle(() => {
     const kh = keyboardHeight.value;
     const isOpen = kh > 0;
     return {
       bottom: kh,
-      paddingBottom: Math.max(12, 89 - kh),
+      paddingBottom: isOpen ? (isAndroid ? 32 : 12) : Math.max(12, 89 - kh),
       shadowOpacity: isOpen ? 0.06 : 0,
-      elevation: isOpen ? 4 : 0,
+      elevation: isAndroid ? (isOpen ? 8 : 2) : 0,
     };
   });
 

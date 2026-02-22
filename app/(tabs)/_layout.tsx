@@ -1,7 +1,7 @@
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Keyboard, StyleSheet } from "react-native";
+import { Keyboard, Platform, StyleSheet } from "react-native";
 
 import { AppHeader } from "@/components/app-header";
 import { AssetIcon } from "@/components/asset-icon";
@@ -15,10 +15,15 @@ export default function TabLayout() {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
-    const show = Keyboard.addListener("keyboardWillShow", () =>
+    const showEvent =
+      Platform.OS === "ios" ? "keyboardWillShow" : "keyboardDidShow";
+    const hideEvent =
+      Platform.OS === "ios" ? "keyboardWillHide" : "keyboardDidHide";
+
+    const show = Keyboard.addListener(showEvent, () =>
       setKeyboardVisible(true),
     );
-    const hide = Keyboard.addListener("keyboardWillHide", () =>
+    const hide = Keyboard.addListener(hideEvent, () =>
       setKeyboardVisible(false),
     );
     return () => {
